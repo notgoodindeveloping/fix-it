@@ -1,21 +1,23 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# FixIt - Citizen Report Application 🛠️
 
-# Run and deploy your AI Studio app
+**FixIt** is a mobile-based citizen report application designed to make it easier for the public to instantly report damages to public facilities (such as potholes, broken streetlights, or clogged drains).
 
-This contains everything you need to run your app locally.
+This project was built as part of a mobile programming laboratory assignment utilizing the **Nylo 7 (Flutter)** framework and **Supabase** as a Backend-as-a-Service (BaaS).
 
-View your app in AI Studio: https://ai.studio/apps/7762c547-7686-4a00-8fbf-c0dc61bb4109
+---
 
-## Run Locally
+## Key Features
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+- **Authentication Guard**: Secures the application so that only authenticated users can access the system.
+- **Sleek & Simple UI**: A clean and responsive interface that focuses on functionality and ease of use.
+- **Real-time Explore Page**: Displays the complete timeline of citizen complaints dynamically fetched from the cloud database.
+- **Report Submission**: An instant complaint form to submit the report title and detailed description of the damage to the system.
 
+---
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+## Tech Stack & Architecture
+
+- **Frontend SDK**: Flutter & Dart
+- **Framework**: Nylo 7 (MVC-like pattern separating Pages & Controllers)
+- **Backend & Database**: Supabase (PostgreSQL)
+- **Environment Management**: Nylo Env (Generated via Build Runner)
