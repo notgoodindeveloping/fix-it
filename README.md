@@ -1,41 +1,23 @@
 # FixIt - Citizen Report Application 🛠️
 
-**FixIt** adalah aplikasi pelaporan fasilitas publik berbasis mobile yang dirancang khusus untuk memudahkan warga dalam mengadukan kerusakan fasilitas umum (seperti jalan berlubang, lampu jalan mati, atau saluran air tersumbat) secara instan. 
+**FixIt** is a mobile-based citizen report application designed to make it easier for the public to instantly report damages to public facilities (such as potholes, broken streetlights, or clogged drains).
 
-Proyek ini dibangun sebagai bagian dari tugas laboratorium pemrograman mobile menggunakan framework **Nylo 7 (Flutter)** dan **Supabase** sebagai *backend-as-a-service* (BaaS).
-
----
-
-## Fitur Utama
-
-- **Authentication Guard**: Mengamankan aplikasi sehingga hanya pengguna terautentikasi yang dapat masuk ke dalam sistem.
-- **Sleek & Simple UI**: Antarmuka bersih dan responsif yang berfokus pada fungsionalitas dan kemudahan penggunaan.
-- **Real-time Explore Page**: Menampilkan seluruh daftar keluhan warga secara dinamis yang ditarik langsung dari database cloud.
-- **Report Submission**: Form pengaduan instan untuk mengirimkan judul keluhan beserta deskripsi detail kerusakan ke sistem.
+This project was built as part of a mobile programming laboratory assignment utilizing the **Nylo 7 (Flutter)** framework and **Supabase** as a Backend-as-a-Service (BaaS).
 
 ---
 
-## Tech Stack & Arsitektur
+## Key Features
+
+- **Authentication Guard**: Secures the application so that only authenticated users can access the system.
+- **Sleek & Simple UI**: A clean and responsive interface that focuses on functionality and ease of use.
+- **Real-time Explore Page**: Displays the complete timeline of citizen complaints dynamically fetched from the cloud database.
+- **Report Submission**: An instant complaint form to submit the report title and detailed description of the damage to the system.
+
+---
+
+## Tech Stack & Architecture
 
 - **Frontend SDK**: Flutter & Dart
-- **Framework**: Nylo 7 (MVC-like pattern dengan pemisahan Page & Controller)
+- **Framework**: Nylo 7 (MVC-like pattern separating Pages & Controllers)
 - **Backend & Database**: Supabase (PostgreSQL)
 - **Environment Management**: Nylo Env (Generated via Build Runner)
-
----
-
-## Prasyarat Instalasi
-
-Sebelum menjalankan proyek ini secara lokal, pastikan kamu telah menginstal:
-- Flutter SDK (Versi terbaru direkomendasikan)
-- Nylo v7
-- Akun Supabase (untuk mendapatkan API URL dan Anon/Publishable Key)
-
----
-
-## Langkah Konfigurasi & Instalasi
-
-### Kloning Repositori
-```bash
-git clone [https://github.com/username-kamu/fixit.git](https://github.com/username-kamu/fixit.git)
-cd fixit
