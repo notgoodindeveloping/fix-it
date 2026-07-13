@@ -205,9 +205,9 @@ object SupabaseService {
         }
     }
 
-    suspend fun insertReport(title: String, description: String, imageUrl: String? = null): Result<Boolean> = withContext(Dispatchers.IO) {
+    suspend fun insertReport(title: String, description: String, imageUrl: String? = null): Result<Long?> = withContext(Dispatchers.IO) {
         if (!isConfigured) {
-            return@withContext Result.success(true)
+            return@withContext Result.success(null)
         }
 
         if (userId.isNullOrEmpty() && !sessionToken.isNullOrEmpty()) {
@@ -227,7 +227,7 @@ object SupabaseService {
             put("description", description)
             put("status", "DILAPORKAN")
             put("user_id", userId)
-            imageUrl?.let { put("image_url", it) }
+            put("image_url", imageUrl ?: "")
         }.toString()
 
         val request = Request.Builder()
@@ -235,16 +235,26 @@ object SupabaseService {
             .addHeader("apikey", supabaseKey)
             .addHeader("Authorization", "Bearer ${sessionToken ?: supabaseKey}")
             .addHeader("Content-Type", "application/json")
-            .addHeader("Prefer", "return=minimal")
+            .addHeader("Prefer", "return=representation")
             .post(json.toRequestBody("application/json".toMediaType()))
             .build()
 
         try {
             val response = client.newCall(request).execute()
+            val bodyStr = response.body?.string() ?: ""
             if (response.isSuccessful) {
-                Result.success(true)
+                val insertedId = try {
+                    val jsonArray = JSONArray(bodyStr)
+                    if (jsonArray.length() > 0) {
+                        jsonArray.getJSONObject(0).optLong("id", -1L)
+                    } else {
+                        -1L
+                    }
+                } catch (e: Exception) {
+                    -1L
+                }
+                Result.success(insertedId)
             } else {
-                val bodyStr = response.body?.string() ?: ""
                 val errorMsg = try {
                     JSONObject(bodyStr).optString("message", "Gagal menyimpan")
                 } catch (e: Exception) {

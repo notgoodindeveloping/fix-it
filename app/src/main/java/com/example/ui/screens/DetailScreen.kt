@@ -244,6 +244,11 @@ fun DetailScreen(
                                     id = reportId,
                                     onSuccess = {
                                         onNavigateBack()
+                                    },
+                                    onError = { errorMsg ->
+                                        scope.launch {
+                                            snackbarHostState.showSnackbar(errorMsg)
+                                        }
                                     }
                                 )
                             },
