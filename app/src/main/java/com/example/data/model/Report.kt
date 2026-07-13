@@ -10,5 +10,6 @@ data class Report(
     val title: String,
     val description: String,
     val status: String = "DILAPORKAN",
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val imageUrl: String? = null
 ) : Serializable

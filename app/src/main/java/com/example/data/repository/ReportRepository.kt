@@ -15,7 +15,7 @@ class ReportRepository(private val reportDao: ReportDao) {
     fun getReportById(id: Long): Flow<Report?> = reportDao.getReportById(id)
 
     // Delete report locally first, then sync with Supabase
-    suspend fun deleteReport(id: Long): Result<Unit> = withContext(Dispatchers.IO) {
+    suspend fun deleteReport(id: Long): Result<Unit> = withContext(Dispatchers.IO + kotlinx.coroutines.NonCancellable) {
         reportDao.deleteReportById(id)
         if (SupabaseService.isConfigured) {
             val result = SupabaseService.deleteReport(id)
@@ -52,15 +52,15 @@ class ReportRepository(private val reportDao: ReportDao) {
     }
 
     // Add new report locally and upload to Supabase if configured
-    suspend fun addReport(title: String, description: String): Result<Unit> = withContext(Dispatchers.IO) {
-        val newReport = Report(title = title, description = description)
+    suspend fun addReport(title: String, description: String, imageUrl: String? = null): Result<Unit> = withContext(Dispatchers.IO) {
+        val newReport = Report(title = title, description = description, imageUrl = imageUrl)
         
         // 1. Save to local Room DB first (offline-first)
         reportDao.insertReport(newReport)
 
         // 2. Try to sync to Supabase
         if (SupabaseService.isConfigured) {
-            val result = SupabaseService.insertReport(title, description)
+            val result = SupabaseService.insertReport(title, description, imageUrl)
             if (result.isSuccess) {
                 Result.success(Unit)
             } else {

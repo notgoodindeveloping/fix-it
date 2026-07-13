@@ -42,7 +42,7 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun createReport(title: String, description: String) {
+    fun createReport(title: String, description: String, imageUri: android.net.Uri? = null) {
         if (title.isBlank()) {
             _uiState.value = ReportUiState.Error("Judul aduan ('Report name') tidak boleh kosong")
             return
@@ -54,7 +54,11 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
 
         _uiState.value = ReportUiState.Loading
         viewModelScope.launch {
-            val result = repository.addReport(title, description)
+            var localImagePath: String? = null
+            if (imageUri != null) {
+                localImagePath = saveImageToInternalStorage(imageUri)
+            }
+            val result = repository.addReport(title, description, localImagePath)
             if (result.isSuccess) {
                 _uiState.value = ReportUiState.Success
             } else {
@@ -62,6 +66,21 @@ class ReportViewModel(application: Application) : AndroidViewModel(application) 
                 // In local mode, even if Supabase sync fails, it saved locally, but we can treat it as a warning or success
                 _uiState.value = ReportUiState.Error(exception?.localizedMessage ?: "Gagal membuat laporan")
             }
+        }
+    }
+
+    private fun saveImageToInternalStorage(uri: android.net.Uri): String? {
+        val context = getApplication<Application>()
+        return try {
+            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+            val file = java.io.File(context.filesDir, "report_${System.currentTimeMillis()}.jpg")
+            java.io.FileOutputStream(file).use { outputStream ->
+                inputStream.use { it.copyTo(outputStream) }
+            }
+            file.absolutePath
+        } catch (e: Exception) {
+            android.util.Log.e("ReportViewModel", "Error saving image", e)
+            null
         }
     }
 

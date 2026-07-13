@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.data.model.Report
 
-@Database(entities = [Report::class], version = 1, exportSchema = false)
+@Database(entities = [Report::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reportDao(): ReportDao
 

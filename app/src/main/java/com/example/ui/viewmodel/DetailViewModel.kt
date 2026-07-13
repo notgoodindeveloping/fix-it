@@ -45,14 +45,10 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun deleteReport(id: Long, onSuccess: () -> Unit, onError: (String) -> Unit) {
+    fun deleteReport(id: Long, onSuccess: () -> Unit) {
+        onSuccess()
         viewModelScope.launch {
-            val result = repository.deleteReport(id)
-            if (result.isSuccess) {
-                onSuccess()
-            } else {
-                onError(result.exceptionOrNull()?.localizedMessage ?: "Gagal menghapus laporan")
-            }
+            repository.deleteReport(id)
         }
     }
 }

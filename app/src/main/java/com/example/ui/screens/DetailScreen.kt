@@ -36,7 +36,6 @@ fun DetailScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var isDeleting by remember { mutableStateOf(false) }
 
     LaunchedEffect(reportId) {
         viewModel.loadReport(reportId)
@@ -136,6 +135,25 @@ fun DetailScreen(
 
                     HorizontalDivider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
 
+                    if (!currentReport.imageUrl.isNullOrEmpty()) {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(240.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                            )
+                        ) {
+                            coil.compose.AsyncImage(
+                                model = currentReport.imageUrl,
+                                contentDescription = "Foto Laporan Kerusakan",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                            )
+                        }
+                    }
+
                     // Description card
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -222,18 +240,10 @@ fun DetailScreen(
                         Button(
                             onClick = {
                                 showDeleteDialog = false
-                                isDeleting = true
                                 viewModel.deleteReport(
                                     id = reportId,
                                     onSuccess = {
-                                        isDeleting = false
                                         onNavigateBack()
-                                    },
-                                    onError = { error ->
-                                        isDeleting = false
-                                        scope.launch {
-                                            snackbarHostState.showSnackbar(error)
-                                        }
                                     }
                                 )
                             },
@@ -256,17 +266,6 @@ fun DetailScreen(
                     },
                     modifier = Modifier.testTag("delete_confirm_dialog")
                 )
-            }
-
-            if (isDeleting) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.5f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
             }
         }
     }

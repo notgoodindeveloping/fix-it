@@ -28,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 import com.example.data.model.Report
 import com.example.ui.viewmodel.ExploreViewModel
 import java.text.SimpleDateFormat
@@ -225,24 +227,44 @@ fun ReportItemCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Text(
-                text = report.title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
+                verticalAlignment = Alignment.Top
+            ) {
+                if (!report.imageUrl.isNullOrEmpty()) {
+                    AsyncImage(
+                        model = report.imageUrl,
+                        contentDescription = "Foto Aduan",
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.surfaceVariant),
+                        contentScale = ContentScale.Crop
+                    )
+                }
 
-            Spacer(modifier = Modifier.height(6.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = report.title,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
-            Text(
-                text = report.description,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis
-            )
+                    Spacer(modifier = Modifier.height(6.dp))
+
+                    Text(
+                        text = report.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
         }
     }
 }

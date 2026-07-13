@@ -152,7 +152,8 @@ object SupabaseService {
                             title = obj.optString("title", ""),
                             description = obj.optString("description", ""),
                             status = obj.optString("status", "DILAPORKAN"),
-                            createdAt = System.currentTimeMillis() // Fallback to current local time
+                            createdAt = System.currentTimeMillis(), // Fallback to current local time
+                            imageUrl = if (obj.isNull("image_url")) null else obj.optString("image_url", null)
                         )
                     )
                 }
@@ -204,7 +205,7 @@ object SupabaseService {
         }
     }
 
-    suspend fun insertReport(title: String, description: String): Result<Boolean> = withContext(Dispatchers.IO) {
+    suspend fun insertReport(title: String, description: String, imageUrl: String? = null): Result<Boolean> = withContext(Dispatchers.IO) {
         if (!isConfigured) {
             return@withContext Result.success(true)
         }
@@ -226,6 +227,7 @@ object SupabaseService {
             put("description", description)
             put("status", "DILAPORKAN")
             put("user_id", userId)
+            imageUrl?.let { put("image_url", it) }
         }.toString()
 
         val request = Request.Builder()
