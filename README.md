@@ -1,21 +1,41 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# FixIt - Citizen Report Application 🛠️
 
-# Run and deploy your AI Studio app
+**FixIt** adalah aplikasi pelaporan fasilitas publik berbasis mobile yang dirancang khusus untuk memudahkan warga dalam mengadukan kerusakan fasilitas umum (seperti jalan berlubang, lampu jalan mati, atau saluran air tersumbat) secara instan. 
 
-This contains everything you need to run your app locally.
+Proyek ini dibangun sebagai bagian dari tugas laboratorium pemrograman mobile menggunakan framework **Nylo 7 (Flutter)** dan **Supabase** sebagai *backend-as-a-service* (BaaS).
 
-View your app in AI Studio: https://ai.studio/apps/7762c547-7686-4a00-8fbf-c0dc61bb4109
+---
 
-## Run Locally
+## Fitur Utama
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+- **Authentication Guard**: Mengamankan aplikasi sehingga hanya pengguna terautentikasi yang dapat masuk ke dalam sistem.
+- **Sleek & Simple UI**: Antarmuka bersih dan responsif yang berfokus pada fungsionalitas dan kemudahan penggunaan.
+- **Real-time Explore Page**: Menampilkan seluruh daftar keluhan warga secara dinamis yang ditarik langsung dari database cloud.
+- **Report Submission**: Form pengaduan instan untuk mengirimkan judul keluhan beserta deskripsi detail kerusakan ke sistem.
 
+---
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+## Tech Stack & Arsitektur
+
+- **Frontend SDK**: Flutter & Dart
+- **Framework**: Nylo 7 (MVC-like pattern dengan pemisahan Page & Controller)
+- **Backend & Database**: Supabase (PostgreSQL)
+- **Environment Management**: Nylo Env (Generated via Build Runner)
+
+---
+
+## Prasyarat Instalasi
+
+Sebelum menjalankan proyek ini secara lokal, pastikan kamu telah menginstal:
+- Flutter SDK (Versi terbaru direkomendasikan)
+- Nylo v7
+- Akun Supabase (untuk mendapatkan API URL dan Anon/Publishable Key)
+
+---
+
+## Langkah Konfigurasi & Instalasi
+
+### Kloning Repositori
+```bash
+git clone [https://github.com/username-kamu/fixit.git](https://github.com/username-kamu/fixit.git)
+cd fixit
